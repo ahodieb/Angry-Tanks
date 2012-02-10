@@ -1,0 +1,296 @@
+Version:0.9
+StartHTML:0000000105
+EndHTML:0000025988
+StartFragment:0000001197
+EndFragment:0000025972
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>mikroIDE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="generator" content="SynEdit HTML exporter" />
+<style type="text/css">
+<!--
+body { color: #000000; background-color: #FFFFFF; }
+body { font-family: Courier New; font-size: 14pt; }
+.cpp1-assembler { color: #FF0000; }
+.cpp1-binary { }
+.cpp1-character { }
+.cpp1-comment { color: #008000; font-style: italic; }
+.cpp1-float { color: #800000; }
+.cpp1-hexadecimal { color: #008000; }
+.cpp1-identifier { }
+.cpp1-illegalchar { }
+.cpp1-number { color: #008000; }
+.cpp1-octal { }
+.cpp1-preprocessor { color: #8000FF; font-style: italic; }
+.cpp1-reservedword { font-weight: bold; }
+.cpp1-space { }
+.cpp1-string { color: #FEA601; }
+.cpp1-symbol { }
+.cpp1-weblink { color: #316AC5; font-style: italic; text-decoration: underline; }
+-->
+</style>
+</head>
+<body>
+<!--StartFragment--><pre><code>
+
+<span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;GLCD_DataPort&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;PORTC;
+
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_CS1&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;RB1_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_CS2&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;RB2_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_RS&nbsp;&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;RB3_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_RW&nbsp;&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;RB4_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_EN&nbsp;&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;RB5_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_RST&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;RB6_bit;
+
+
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_CS1_Direction&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;TRISB1_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_CS2_Direction&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;TRISB2_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_RS_Direction&nbsp;&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;TRISB3_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_RW_Direction&nbsp;&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;TRISB4_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_EN_Direction&nbsp;&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;TRISB5_bit;
+</span><span class="cpp1-reservedword">sbit</span><span class="cpp1-space">&nbsp;GLCD_RST_Direction&nbsp;</span><span class="cpp1-reservedword">at</span><span class="cpp1-space">&nbsp;TRISB6_bit;
+
+
+
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;repaint&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;t_color&nbsp;=&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;mv_step&nbsp;=&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;t_indc&nbsp;=&nbsp;'&gt;';
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;current_t&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;current_m&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;started&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;fire&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;i;
+
+
+</span><span class="cpp1-reservedword">typedef</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">struct</span><span class="cpp1-symbol">{
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;body_width;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;body_height;
+
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;head_width;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;head_hight;
+&nbsp;&nbsp;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;wheel_dis;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;x;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;y;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-symbol">*&nbsp;name;
+&nbsp;&nbsp;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;gun_length;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;gun_angle;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;gun_power;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;}&nbsp;&nbsp;Tank;
+&nbsp;&nbsp;
+&nbsp;&nbsp;
+
+&nbsp;&nbsp;Tank&nbsp;t1;
+&nbsp;&nbsp;Tank&nbsp;t2;
+&nbsp;&nbsp;Tank*&nbsp;Tank_Ptr;
+&nbsp;&nbsp;
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;interrupt(){
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(INTCON.INTF&nbsp;==&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-space">&nbsp;){
+&nbsp;&nbsp;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(&nbsp;PORTD.F0)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)&nbsp;Tank_Ptr&nbsp;=&nbsp;&amp;t1;
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">)&nbsp;Tank_Ptr&nbsp;=&nbsp;&amp;t2;
+
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_m&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)&nbsp;Tank_Ptr-&gt;gun_angle&nbsp;++;
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;Tank_Ptr-&gt;gun_power&nbsp;++;
+&nbsp;&nbsp;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(&nbsp;PORTD.F1)
+&nbsp;&nbsp;{
+
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)&nbsp;Tank_Ptr&nbsp;=&nbsp;&amp;t1;
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">)&nbsp;Tank_Ptr&nbsp;=&nbsp;&amp;t2;
+
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_m&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)Tank_Ptr-&gt;gun_angle&nbsp;--;
+&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;Tank_Ptr-&gt;gun_power&nbsp;--;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(&nbsp;PORTD.F2)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;</span><span class="cpp1-comment">//current_t&nbsp;=&nbsp;~current_t;
+</span><span class="cpp1-space">&nbsp;&nbsp;fire&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;}&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(&nbsp;PORTD.F3)
+&nbsp;&nbsp;{
+
+&nbsp;&nbsp;current_m&nbsp;=&nbsp;~current_m;
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;repaint&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;INTCON.INTF&nbsp;=&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;}
+}
+
+
+
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;draw_Labels()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Write_Text(t1.name,</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)&nbsp;Glcd_Write_Char(t_indc,</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Write_Text(t2.name,</span><span class="cpp1-number">111</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">)&nbsp;Glcd_Write_Char(t_indc,</span><span class="cpp1-number">100</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_H_Line(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">127</span><span class="cpp1-symbol">,</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,t_color);
+
+
+
+}
+</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;pw,a;
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;draw_menu()
+{
+
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Rectangle(</span><span class="cpp1-number">14</span><span class="cpp1-symbol">,</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,</span><span class="cpp1-number">114</span><span class="cpp1-symbol">,</span><span class="cpp1-number">13</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Rectangle(</span><span class="cpp1-number">14</span><span class="cpp1-symbol">,</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,</span><span class="cpp1-number">114</span><span class="cpp1-symbol">,</span><span class="cpp1-number">17</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;t1.gun_angle;
+&nbsp;&nbsp;&nbsp;&nbsp;pw&nbsp;=&nbsp;t1.gun_power;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_t&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;&nbsp;</span><span class="cpp1-number">180</span><span class="cpp1-space">&nbsp;-&nbsp;t2.gun_angle&nbsp;;
+&nbsp;&nbsp;&nbsp;&nbsp;pw&nbsp;=&nbsp;t2.gun_power;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Line(</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,</span><span class="cpp1-number">15</span><span class="cpp1-symbol">+a,</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Line(</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,</span><span class="cpp1-number">16</span><span class="cpp1-symbol">,</span><span class="cpp1-number">15</span><span class="cpp1-symbol">+pw,</span><span class="cpp1-number">16</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_m&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)Glcd_Rectangle(</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-number">13</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(current_m&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">)Glcd_Rectangle(</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-number">17</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_H_Line(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">127</span><span class="cpp1-symbol">,</span><span class="cpp1-number">20</span><span class="cpp1-symbol">,t_color);
+}
+
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;ux,uy,lx,ly,hd;
+</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;g_x,g_y;
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;draw_Tank(Tank*&nbsp;t)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;ux&nbsp;=&nbsp;t-&gt;x&nbsp;-&nbsp;(t-&gt;body_width/</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;uy&nbsp;=&nbsp;</span><span class="cpp1-number">63</span><span class="cpp1-space">&nbsp;-&nbsp;&nbsp;(t-&gt;y&nbsp;+&nbsp;(t-&gt;body_height));
+&nbsp;&nbsp;&nbsp;&nbsp;lx&nbsp;=&nbsp;&nbsp;t-&gt;x&nbsp;+&nbsp;(t-&gt;body_width/</span><span class="cpp1-number">2</span><span class="cpp1-symbol">)&nbsp;;
+&nbsp;&nbsp;&nbsp;&nbsp;ly&nbsp;=&nbsp;&nbsp;</span><span class="cpp1-number">63</span><span class="cpp1-space">&nbsp;-&nbsp;(&nbsp;t-&gt;y&nbsp;);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Box(ux,uy,lx,ly,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Dot(ux&nbsp;+&nbsp;t-&gt;wheel_dis,ly&nbsp;+&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,t_color);
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Dot(lx&nbsp;-&nbsp;t-&gt;wheel_dis,ly&nbsp;+&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,t_color);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;hd&nbsp;=&nbsp;(t-&gt;body_width&nbsp;-&nbsp;t-&gt;head_width)/</span><span class="cpp1-number">2</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Box(ux&nbsp;+&nbsp;hd,uy&nbsp;-&nbsp;t-&gt;head_hight,lx&nbsp;-&nbsp;hd,uy,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;g_x&nbsp;=&nbsp;(cosE3(t-&gt;gun_angle)&nbsp;*&nbsp;t-&gt;gun_length)&nbsp;/</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;&nbsp;&nbsp;g_y&nbsp;=&nbsp;(sinE3(t-&gt;gun_angle)&nbsp;*&nbsp;t-&gt;gun_length)&nbsp;/</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Line(t-&gt;x,</span><span class="cpp1-number">63</span><span class="cpp1-space">&nbsp;-&nbsp;(t-&gt;y&nbsp;+&nbsp;t-&gt;body_height&nbsp;+&nbsp;t-&gt;head_hight&nbsp;+&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">),t-&gt;x&nbsp;+&nbsp;g_x,</span><span class="cpp1-number">63</span><span class="cpp1-space">&nbsp;-&nbsp;(t-&gt;y&nbsp;+&nbsp;t-&gt;body_height&nbsp;+&nbsp;g_y&nbsp;+&nbsp;&nbsp;t-&gt;head_hight&nbsp;+&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">),</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+}
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;draw_fire()
+{
+
+&nbsp;&nbsp;&nbsp;&nbsp;Tank_Ptr&nbsp;=&nbsp;&amp;&nbsp;t1;
+&nbsp;&nbsp;&nbsp;&nbsp;g_x&nbsp;=&nbsp;(cosE3(Tank_Ptr-&gt;gun_angle)&nbsp;*&nbsp;Tank_Ptr-&gt;gun_power)&nbsp;/</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;&nbsp;&nbsp;g_y&nbsp;=&nbsp;(sinE3(Tank_Ptr-&gt;gun_angle)&nbsp;*&nbsp;Tank_Ptr-&gt;gun_power)&nbsp;/</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">;
+
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Line(Tank_Ptr-&gt;x,</span><span class="cpp1-number">63</span><span class="cpp1-space">&nbsp;-&nbsp;(Tank_Ptr-&gt;y&nbsp;+&nbsp;Tank_Ptr-&gt;body_height&nbsp;+&nbsp;Tank_Ptr-&gt;head_hight&nbsp;+&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">),
+&nbsp;&nbsp;&nbsp;&nbsp;Tank_Ptr-&gt;x&nbsp;+&nbsp;g_x,</span><span class="cpp1-number">63</span><span class="cpp1-space">&nbsp;-&nbsp;(Tank_Ptr-&gt;y&nbsp;+&nbsp;Tank_Ptr-&gt;body_height&nbsp;+&nbsp;g_y&nbsp;+&nbsp;&nbsp;Tank_Ptr-&gt;head_hight&nbsp;+&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">),</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+&nbsp;&nbsp;</span><span class="cpp1-comment">/*Glcd_Fill(0x44);
+&nbsp;&nbsp;&nbsp;&nbsp;Delay_ms(1000);
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Fill(0x00);
+&nbsp;&nbsp;&nbsp;&nbsp;repaint&nbsp;=&nbsp;0x01;*/
+
+
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;Init_Level(</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;level)
+{
+
+</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;(level&nbsp;==&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)
+{
+
+t1.body_width&nbsp;=&nbsp;</span><span class="cpp1-number">15</span><span class="cpp1-symbol">;
+t1.body_height&nbsp;=&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">;
+t1.head_width&nbsp;=&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-symbol">;
+t1.head_hight&nbsp;=&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">;
+t1.x&nbsp;=&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">;
+t1.y&nbsp;=&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;
+t1.wheel_dis&nbsp;=&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">;
+t1.name&nbsp;&nbsp;=&nbsp;</span><span class="cpp1-string">&quot;T1&quot;</span><span class="cpp1-symbol">;
+t1.gun_angle&nbsp;=&nbsp;</span><span class="cpp1-number">30</span><span class="cpp1-symbol">;
+t1.gun_power&nbsp;=&nbsp;</span><span class="cpp1-number">50</span><span class="cpp1-symbol">;
+t1.gun_length&nbsp;=&nbsp;</span><span class="cpp1-number">12</span><span class="cpp1-symbol">;
+
+t2.body_width&nbsp;=&nbsp;t1.body_width;
+t2.body_height&nbsp;=&nbsp;t1.body_height;
+t2.head_width&nbsp;=&nbsp;t1.head_width&nbsp;;
+t2.head_hight&nbsp;=&nbsp;t1.head_hight&nbsp;;
+t2.x&nbsp;=&nbsp;</span><span class="cpp1-number">120</span><span class="cpp1-symbol">;
+t2.y&nbsp;=&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;
+t2.wheel_dis&nbsp;=&nbsp;t1.wheel_dis;
+t2.name&nbsp;&nbsp;=&nbsp;</span><span class="cpp1-string">&quot;T2&quot;</span><span class="cpp1-symbol">;
+t2.gun_angle&nbsp;=&nbsp;</span><span class="cpp1-number">180</span><span class="cpp1-space">&nbsp;-&nbsp;t1.gun_angle&nbsp;;
+t2.gun_power&nbsp;=&nbsp;t1.gun_power;
+t2.gun_length&nbsp;=&nbsp;t1.gun_length;
+}
+}
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;main()&nbsp;{
+TRISB&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">;
+TRISD&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">;
+
+
+
+Glcd_Init();
+Glcd_Fill(</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">);
+Glcd_Set_Font(Character8x7,&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,&nbsp;</span><span class="cpp1-number">32</span><span class="cpp1-symbol">);
+
+
+
+</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(started&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">)
+{
+Init_Level(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+INTCON&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x90</span><span class="cpp1-symbol">;
+started&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">;
+}
+
+
+
+</span><span class="cpp1-reservedword">while</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)
+{
+
+&nbsp;&nbsp;
+</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(repaint&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Glcd_Fill(</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">);
+
+&nbsp;&nbsp;&nbsp;&nbsp;draw_Labels();
+&nbsp;&nbsp;&nbsp;&nbsp;draw_menu();
+&nbsp;&nbsp;&nbsp;&nbsp;draw_Tank(&amp;t1);
+&nbsp;&nbsp;&nbsp;&nbsp;draw_Tank(&amp;t2);
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;repaint&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-symbol">(fire&nbsp;==&nbsp;</span><span class="cpp1-hexadecimal">0xff</span><span class="cpp1-symbol">)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;draw_fire();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fire&nbsp;=&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+
+}
+}
+</span></code></pre><!--EndFragment--></body>
+</html>
