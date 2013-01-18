@@ -5,10 +5,12 @@ A tank shooting multiplayer video game presented as my microprocessor project. I
 
 Developing Notes:
 ------------------
-* The main game file is 'Game.c' it has all the necessary code , the rest of files is generated / needed by the MicroC compiler. so if u just need to look at the code and logic around the game just look at this single file.
+* The main game file is ['Game.c'][1] it has all the necessary code , the rest of files is generated / needed by the MicroC compiler. so if u just need to look at the code and logic around the game just look at this single file.
 
 * The projectile model was approximated to a linear model for easier calculation on the controller. [curves have become triangles and no gravity equations were put into consideration]
 
+  [1]: https://github.com/TheNightPhoenix/Angry-Tanks/blob/master/src/Game.c "Game.c"
+  
 Software Used:
 ----------------
 * MikroC Pro http://www.mikroe.com/mikroc/pic/ [ there is a free version but i needed to use the builtin GLCD Libraries beacause i didnt have enough time for my project. ]
