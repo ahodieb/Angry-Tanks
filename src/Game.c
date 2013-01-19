@@ -1,5 +1,4 @@
-
-
+//Stuff needed for GLCD Library to work.
 char GLCD_DataPort at PORTC;
 
 sbit GLCD_CS1 at RB1_bit;
@@ -9,7 +8,6 @@ sbit GLCD_RW  at RB4_bit;
 sbit GLCD_EN  at RB5_bit;
 sbit GLCD_RST at RB6_bit;
 
-
 sbit GLCD_CS1_Direction at TRISB1_bit;
 sbit GLCD_CS2_Direction at TRISB2_bit;
 sbit GLCD_RS_Direction  at TRISB3_bit;
@@ -17,12 +15,12 @@ sbit GLCD_RW_Direction  at TRISB4_bit;
 sbit GLCD_EN_Direction  at TRISB5_bit;
 sbit GLCD_RST_Direction at TRISB6_bit;
 
-
-
+//settings of the game.
 unsigned short repaint = 0x01;
 unsigned short t_color = 1;
 unsigned short mv_step = 5;
 unsigned char t_indc = '>';
+
 unsigned short current_t = 0x00;
 unsigned short current_m = 0x00;
 unsigned short current_l = 0x00;
@@ -31,6 +29,7 @@ unsigned short fire = 0x00;
 unsigned short i,j;
 
 
+//struct for the tank , the closest thing u can get to a class :D.
 typedef struct{
   unsigned short body_width;
   unsigned short body_height;
@@ -47,28 +46,28 @@ typedef struct{
   int gun_angle;
   int gun_power;
     
-  }  Tank;
+}  Tank;
   
-  
-  typedef struct{
+//struct for the obstacles . things that comes in ur way while shooting like a wall or sth.
+typedef struct{
   unsigned short width;
   unsigned short height;
   unsigned short x;
   unsigned short y;
-  }  Obstacle;
+}  Obstacle;
 
   
+//game variables.
+Tank t1;
+Tank t2;
 
-  Tank t1;
-  Tank t2;
-  Obstacle ob1;
-  Tank* Tank_Ptr;
-  Tank* Tank_Ptr2;
-  
+Tank* Tank_Ptr;
+Tank* Tank_Ptr2;
+
+Obstacle ob1;
 
   
-  
-
+//interupt function which is called whenever any key is pressed.
 void interrupt(){
   if(INTCON.INTF == 1 ){
   
@@ -106,6 +105,7 @@ void interrupt(){
   }
 }
 
+// function drawing the players names.
 void draw_Labels()
 {
     Glcd_Write_Text(t1.name,11,0,1);
@@ -117,7 +117,7 @@ void draw_Labels()
 
 }
 
-
+//function drawing the upper menu with the power and angle bar.
 int pw,a;
 void draw_menu()
 {
@@ -144,6 +144,7 @@ void draw_menu()
     Glcd_H_Line(0,127,20,t_color);
 }
 
+//function drawing the tank.
 unsigned short ux,uy,lx,ly,hd;
 unsigned int g_x,g_y;
 void draw_Tank(Tank* t)
@@ -167,6 +168,7 @@ void draw_Tank(Tank* t)
 
 }
 
+//function drawing obstacle
 void draw_ob()
 {
     ux = ob1.x - (ob1.width/2);
@@ -187,6 +189,7 @@ void draw_win()
      Glcd_Write_Text("Won",52,4,1);
      
 }
+//the function used to  detect collision hits.and its used by the drawing function almost every step of the loop.
 unsigned short results;
 unsigned short detect_collision(int x , int y)
 {
@@ -232,6 +235,7 @@ unsigned short detect_collision(int x , int y)
  return results;
 }
 
+//function drawing the projectile and firing at the target. and determining if u missed or hit the target.
 long f_x,f_y,ex;
 long l_x , l_y;
 short collision;
@@ -340,7 +344,8 @@ void draw_fire()
 }
 
 
-
+// at the last day of my project i decided i have time ti implement levels . levels were basicly 
+// done by changing the positions of the tanks , and changing the size and location of the obstacle.
 void Init_Level()
 {
 current_l ++;
