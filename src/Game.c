@@ -68,10 +68,12 @@ Obstacle ob1;
 
   
 //interupt function which is called whenever any key is pressed.
+// since im using one interupt pin and 4 buttons, i put them all into an OR . and read the input from port D
+// which i connected the 4 buttons to it . so any key fires the interupt and then i read the key itself from the port.
 void interrupt(){
   if(INTCON.INTF == 1 ){
   
-  if( PORTD.F0)
+  if( PORTD.F0) //increment value
   {
    if(current_t == 0x00) Tank_Ptr = &t1;
    if(current_t == 0xff) Tank_Ptr = &t2;
@@ -80,7 +82,7 @@ void interrupt(){
    else Tank_Ptr->gun_power ++;
   
   }
-  if( PORTD.F1)
+  if( PORTD.F1)//decrement value.
   {
 
    if(current_t == 0x00) Tank_Ptr = &t1;
@@ -90,17 +92,18 @@ void interrupt(){
    else Tank_Ptr->gun_power --;
    
   }
-  if( PORTD.F2)
+  if( PORTD.F2)//swich between angle and power.
   {
   current_m = ~current_m;
   }
-  if( PORTD.F3)
+  if( PORTD.F3)//simply fire (i put a nice red button for fire it was fun)
   {
 
   fire = 0x01;
   }
 
   repaint = 0x01;
+  //clearing the interupt flag.
   INTCON.INTF = 0;
   }
 }
@@ -118,6 +121,8 @@ void draw_Labels()
 }
 
 //function drawing the upper menu with the power and angle bar.
+//the bars were 3 px rectangles empty from the inside which gave an empty pixel line 
+//then the angle / power value is shown on the scale using this empty line.
 int pw,a;
 void draw_menu()
 {
@@ -161,6 +166,8 @@ void draw_Tank(Tank* t)
     hd = (t->body_width - t->head_width)/2;
     Glcd_Box(ux + hd,uy - t->head_height,lx - hd,uy,1);
     
+    // this fancy part is to show the gun pointing upwards and downwards when u change ur angle.
+    // one of the most fun parts of the project :D
     g_x = (cosE3(t->gun_angle) * t->gun_length) /1000;
     g_y = (sinE3(t->gun_angle) * t->gun_length) /1000;
     
@@ -169,6 +176,7 @@ void draw_Tank(Tank* t)
 }
 
 //function drawing obstacle
+//just a solid block put some place in the space between the two tanks.
 void draw_ob()
 {
     ux = ob1.x - (ob1.width/2);
@@ -179,7 +187,7 @@ void draw_ob()
     Glcd_Box(ux,uy,lx,ly,1);
 }
 
-
+//Drawing the win State. a banner saying u won.
 void draw_win()
 {
 
@@ -189,6 +197,7 @@ void draw_win()
      Glcd_Write_Text("Won",52,4,1);
      
 }
+
 //the function used to  detect collision hits.and its used by the drawing function almost every step of the loop.
 unsigned short results;
 unsigned short detect_collision(int x , int y)
@@ -236,6 +245,7 @@ unsigned short detect_collision(int x , int y)
 }
 
 //function drawing the projectile and firing at the target. and determining if u missed or hit the target.
+//almost the main function of the game.
 long f_x,f_y,ex;
 long l_x , l_y;
 short collision;
@@ -346,6 +356,7 @@ void draw_fire()
 
 // at the last day of my project i decided i have time ti implement levels . levels were basicly 
 // done by changing the positions of the tanks , and changing the size and location of the obstacle.
+//each if has like a discription of the inital state of the level. 
 void Init_Level()
 {
 current_l ++;
@@ -476,6 +487,8 @@ current_l = 0x00;
 }
 }
 
+
+//obviously the main function calling all those fancy functions above :D.
 void main() {
 TRISB = 0x01;
 TRISD = 0xff;
